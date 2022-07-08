@@ -8,7 +8,32 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="UI\Images\Icons\Close\akar-icons_plus.png" />
+    <None Remove="UI\Images\Icons\Close\charm_cross.png" />
+    <None Remove="UI\Images\Icons\ExpandCollapse\akar-icons_plus.png" />
+    <None Remove="UI\Images\Icons\ExpandCollapse\eva_collapse-fill.png" />
+    <None Remove="UI\Images\Icons\ExpandCollapse\uil_expand-alt.png" />
+    <None Remove="UI\Images\Icons\Roll\akar-icons_plus.png" />
+    <None Remove="UI\Images\Icons\Roll\akar-icons_roll.png" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="NAudio" Version="2.1.0" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="UI\Fonts\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="UI\Images\Icons\Close\akar-icons_plus.png" />
+    <Resource Include="UI\Images\Icons\Close\charm_cross.png" />
+    <Resource Include="UI\Images\Icons\ExpandCollapse\akar-icons_plus.png" />
+    <Resource Include="UI\Images\Icons\ExpandCollapse\eva_collapse-fill.png" />
+    <Resource Include="UI\Images\Icons\ExpandCollapse\uil_expand-alt.png" />
+    <Resource Include="UI\Images\Icons\Roll\akar-icons_plus.png" />
+    <Resource Include="UI\Images\Icons\Roll\akar-icons_roll.png" />
   </ItemGroup>
 
 </Project>

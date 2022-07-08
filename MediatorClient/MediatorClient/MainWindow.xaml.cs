@@ -24,5 +24,35 @@ namespace MediatorClient
         {
             InitializeComponent();
         }
+
+        private void OnCloseClick(object sender, MouseButtonEventArgs e)
+        {
+            Close();
+        }
+
+        private void ExpandCollapse(object sender, MouseButtonEventArgs e)
+        {
+            if (WindowState == WindowState.Normal)
+            {
+                ExpandImage.Source = new BitmapImage(new Uri("./UI/Images/Icons/ExpandCollapse/eva_collapse-fill.png", UriKind.Relative));
+                WindowState = WindowState.Maximized;
+            }
+            else
+            {
+                ExpandImage.Source = new BitmapImage(new Uri("./UI/Images/Icons/ExpandCollapse/uil_expand-alt.png", UriKind.Relative));
+                WindowState = WindowState.Normal;
+            }
+        }
+
+        private void RollDown(object sender, MouseButtonEventArgs e)
+        {
+            WindowState = WindowState.Minimized;
+        }
+
+        private void OnTopPanelMouseDown(object sender, MouseButtonEventArgs e)
+        {
+            if (e.LeftButton == MouseButtonState.Pressed)
+                DragMove();
+        }
     }
 }

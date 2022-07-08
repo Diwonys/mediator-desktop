@@ -3,10 +3,66 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        
+        xmlns:preloadViewModel="clr-namespace:MediatorClient.MVVM.ViewModel"
+        
         xmlns:local="clr-namespace:MediatorClient"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
-    <Grid>
+        
+        Height="450" Width="800"
+        MinHeight="450" MinWidth="800"
+        
+        WindowStyle="None"
+        WindowStartupLocation="CenterScreen"
+        Background="Transparent"
+        AllowsTransparency="True"
+        ResizeMode="CanResize"
+        >
+    <WindowChrome.WindowChrome>
+        <WindowChrome 
+        CaptionHeight="0"
+        ResizeBorderThickness="5" />
+    </WindowChrome.WindowChrome>
+    <!--<Window.DataContext>
+        <viewModel:MainViewModel/>
+    </Window.DataContext>-->
+    <Window.DataContext>
+        <preloadViewModel:TemplateViewModel/>
+    </Window.DataContext>
+    <DockPanel Background="#322a4c">
+        <Border DockPanel.Dock="Top" 
+                Height="25"
+                Background="Black"
+                MouseDown="OnTopPanelMouseDown">
+            <Grid HorizontalAlignment="Stretch">
 
-    </Grid>
+                <TextBlock Text="Mediator"
+                   VerticalAlignment="Center"
+                   Foreground="White"
+                   FontSize="16"
+                   />
+
+                <StackPanel Grid.Column="1" 
+                        Style="{StaticResource StackControlIcons}"
+                        >
+                    <Image
+                       Style="{StaticResource RollControlIcon}"
+                       MouseDown="RollDown">
+                    </Image>
+
+                    <Image x:Name="ExpandImage"
+                       Style="{StaticResource ExpandControlIcon}"
+                       MouseDown="ExpandCollapse">
+                    </Image>
+
+                    <Image
+                       MouseDown="OnCloseClick" Style="{StaticResource CloseControlIcon}">
+                    </Image>
+                </StackPanel>
+            </Grid>
+        </Border>
+        <ContentControl Grid.Column="1"
+                            Margin="10"
+                            Content="{Binding CurrentView}"/>
+    </DockPanel>
 </Window>
