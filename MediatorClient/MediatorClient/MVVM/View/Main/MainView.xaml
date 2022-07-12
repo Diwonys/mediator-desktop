@@ -10,30 +10,38 @@
     <UserControl.DataContext>
         <viewModel:MainViewModel/>
     </UserControl.DataContext>
+
     <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="200"/>
+            <ColumnDefinition />
+        </Grid.ColumnDefinitions>
         <Grid>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="200"/>
-                <ColumnDefinition />
-            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition Height="50"/>
+            </Grid.RowDefinitions>
             <StackPanel>
                 <RadioButton Content="Home"
-                             Style="{StaticResource MenuButton}"
-                             IsChecked="True"
-                             Command="{Binding HomeCommand}"/>
+                            Style="{StaticResource MenuButton}"
+                            IsChecked="True"
+                            Command="{Binding HomeCommand}"/>
 
                 <RadioButton Content="Settings"
-                             Style="{StaticResource MenuButton}"
-                             Command="{Binding SettingsCommand}"/>
-                
-                <RadioButton Content="Laboratory"
-                             Style="{StaticResource MenuButton}"
-                             Command="{Binding LaboratoryCommand}"/>
-            </StackPanel>
+                            Style="{StaticResource MenuButton}"
+                            Command="{Binding SettingsCommand}"/>
 
-            <ContentControl Grid.Column="1"
-                            Margin="10"
-                            Content="{Binding CurrentView}"/>
+                <RadioButton Content="Laboratory"
+                            Style="{StaticResource MenuButton}"
+                            Command="{Binding LaboratoryCommand}"/>
+            </StackPanel>
+            <TextBlock Text="Text" 
+                       Background="White"
+                       Grid.Row="1"/>
         </Grid>
+
+        <ContentControl Grid.Column="1"
+                        Margin="10"
+                        Content="{Binding CurrentView}"/>
     </Grid>
 </UserControl>

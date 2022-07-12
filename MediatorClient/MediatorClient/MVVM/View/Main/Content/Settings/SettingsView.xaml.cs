@@ -1,6 +1,7 @@
 ﻿using MediatorClient.MVVM.Model;
 using MediatorClient.Services;
 using NAudio.Wave;
+using Notification.Wpf;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -41,11 +42,21 @@ namespace MediatorClient.MVVM.View.Main.Content.Settings
             AsioDrivers.Text = _settings.DriverName;
         }
 
-        private async void OnAsioDriversSelectionChanged(object sender, SelectionChangedEventArgs e)
+        private async void OnSaveClick(object sender, RoutedEventArgs e)
         {
             var settings = LocalStorageService.Get<AsioSettings>(_settingsKey);
             settings.DriverName = AsioDrivers.SelectedItem.ToString();
             await LocalStorageService.AddOrReplaceAsync(_settingsKey, settings);
+
+            var notificationManager = new NotificationManager();
+
+            notificationManager.Show(new NotificationContent
+            {
+                Title = "Sample notification",
+                Message = "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+                Type = NotificationType.Information
+            }, areaName: "WindowArea");
+
         }
     }
 }

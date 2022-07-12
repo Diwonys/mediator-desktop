@@ -1,4 +1,5 @@
-﻿using MediatorClient.MVVM.ViewModel;
+﻿using MediatorClient.Core.Halpers;
+using MediatorClient.MVVM.ViewModel;
 using MediatorClient.MVVM.ViewModel.Preload;
 using System;
 using System.Collections.Generic;
@@ -30,24 +31,21 @@ namespace MediatorClient.MVVM.View.Preload
 
         private void OnLoaded(object sender, RoutedEventArgs e)
         {
-            RedirectToMain();
+            if(false) //logined check
+                RedirectToUpdate();
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            RedirectToMain();
+            if (true) //logined check
+                RedirectToUpdate();
         }
 
-        public void RedirectToMain()
+        public void RedirectToUpdate()
         {
             var obj = VisualTreeHelper.GetParent(this) as ContentPresenter;
-            var value = GetPropValue(obj.TemplatedParent, "DataContext") as TemplateViewModel;
-            value.CurrentView = value.MainTemplate;
-        }
-
-        public static object GetPropValue(object src, string propName)
-        {
-            return src.GetType().GetProperty(propName).GetValue(src, null);
+            var value = obj.TemplatedParent.GetPropertyValue("DataContext") as TemplateViewModel;
+            value.CurrentView = value.UpdateTemplate;
         }
     }
 

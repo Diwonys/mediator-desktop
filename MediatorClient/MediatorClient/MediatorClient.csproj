@@ -15,11 +15,14 @@
     <None Remove="UI\Images\Icons\ExpandCollapse\uil_expand-alt.png" />
     <None Remove="UI\Images\Icons\Roll\akar-icons_plus.png" />
     <None Remove="UI\Images\Icons\Roll\akar-icons_roll.png" />
+    <None Remove="UI\Images\Loader\Discord.png" />
+    <None Remove="UI\Images\Loader\Loader.png" />
   </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="NAudio" Version="2.1.0" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
+    <PackageReference Include="Notification.WPF" Version="6.1.0.5" />
   </ItemGroup>
 
   <ItemGroup>
@@ -34,6 +37,8 @@
     <Resource Include="UI\Images\Icons\ExpandCollapse\uil_expand-alt.png" />
     <Resource Include="UI\Images\Icons\Roll\akar-icons_plus.png" />
     <Resource Include="UI\Images\Icons\Roll\akar-icons_roll.png" />
+    <Resource Include="UI\Images\Loader\Discord.png" />
+    <Resource Include="UI\Images\Loader\Loader.png" />
   </ItemGroup>
 
 </Project>

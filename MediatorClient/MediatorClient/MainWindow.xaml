@@ -6,7 +6,7 @@
         
         xmlns:preloadViewModel="clr-namespace:MediatorClient.MVVM.ViewModel"
         
-        xmlns:local="clr-namespace:MediatorClient"
+        xmlns:local="clr-namespace:MediatorClient" xmlns:notifications="clr-namespace:Notification.Wpf.Controls;assembly=Notification.Wpf"
         mc:Ignorable="d"
         
         Height="450" Width="800"
@@ -19,50 +19,51 @@
         ResizeMode="CanResize"
         >
     <WindowChrome.WindowChrome>
-        <WindowChrome 
-        CaptionHeight="0"
-        ResizeBorderThickness="5" />
+        <WindowChrome CaptionHeight="0"
+                      ResizeBorderThickness="5" />
     </WindowChrome.WindowChrome>
-    <!--<Window.DataContext>
-        <viewModel:MainViewModel/>
-    </Window.DataContext>-->
     <Window.DataContext>
         <preloadViewModel:TemplateViewModel/>
     </Window.DataContext>
-    <DockPanel Background="#322a4c">
-        <Border DockPanel.Dock="Top" 
+    <Grid>
+        <DockPanel Background="#322a4c">
+            <Border DockPanel.Dock="Top" 
+                Margin="0,1,0,0"
                 Height="25"
                 Background="Black"
+                Panel.ZIndex="3"
                 MouseDown="OnTopPanelMouseDown">
-            <Grid HorizontalAlignment="Stretch">
+                <Grid HorizontalAlignment="Stretch">
 
-                <TextBlock Text="Mediator"
+                    <TextBlock Text="Mediator"
                    VerticalAlignment="Center"
                    Foreground="White"
                    FontSize="16"
                    />
 
-                <StackPanel Grid.Column="1" 
+                    <StackPanel Grid.Column="1" 
                         Style="{StaticResource StackControlIcons}"
                         >
-                    <Image
+                        <Image
                        Style="{StaticResource RollControlIcon}"
                        MouseDown="RollDown">
-                    </Image>
+                        </Image>
 
-                    <Image x:Name="ExpandImage"
+                        <Image x:Name="ExpandImage"
                        Style="{StaticResource ExpandControlIcon}"
                        MouseDown="ExpandCollapse">
-                    </Image>
+                        </Image>
 
-                    <Image
+                        <Image
                        MouseDown="OnCloseClick" Style="{StaticResource CloseControlIcon}">
-                    </Image>
-                </StackPanel>
-            </Grid>
-        </Border>
-        <ContentControl Grid.Column="1"
+                        </Image>
+                    </StackPanel>
+                </Grid>
+            </Border>
+            <ContentControl Grid.Column="1"
                             Margin="10"
                             Content="{Binding CurrentView}"/>
-    </DockPanel>
+        </DockPanel>
+        <notifications:NotificationArea x:Name="WindowArea" Panel.ZIndex="3" MaxItems="3"/>
+    </Grid>
 </Window>

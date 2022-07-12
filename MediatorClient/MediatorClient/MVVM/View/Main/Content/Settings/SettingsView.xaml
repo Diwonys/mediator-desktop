@@ -7,8 +7,10 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <StackPanel>
-        <ComboBox x:Name="AsioDrivers" SelectionChanged="OnAsioDriversSelectionChanged">
-            
+        <ComboBox x:Name="AsioDrivers">
         </ComboBox>
+
+        <Button Content="Save" Click="OnSaveClick">
+        </Button>
     </StackPanel>
 </UserControl>

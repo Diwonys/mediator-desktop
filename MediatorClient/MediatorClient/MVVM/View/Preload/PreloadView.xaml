@@ -13,6 +13,8 @@
                        Width="150"
                        Height="150"
                        FontWeight="30"/>
+            <TextBox Text="Login"/>
+            <TextBox Text="Password"/>
             <Button Content="Login" Click="Button_Click">
             </Button>
         </StackPanel>

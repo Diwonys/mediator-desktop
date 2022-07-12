@@ -5,16 +5,15 @@
              
              xmlns:mainView="clr-namespace:MediatorClient.MVVM.View.Main"
              xmlns:mainViewModel="clr-namespace:MediatorClient.MVVM.ViewModel.Main"
-             
              xmlns:preloadView="clr-namespace:MediatorClient.MVVM.View.Preload"
              xmlns:preloadViewModel="clr-namespace:MediatorClient.MVVM.ViewModel.Preload"
+             xmlns:updateView="clr-namespace:MediatorClient.MVVM.View.Update"
+             xmlns:updateViewModel="clr-namespace:MediatorClient.MVVM.ViewModel.Update"
              
              xmlns:main_homeView="clr-namespace:MediatorClient.MVVM.View.Main.Content.Home"
              xmlns:main_homeViewModel="clr-namespace:MediatorClient.MVVM.ViewModel.Main.Content.Home"
-             
              xmlns:main_settingsView="clr-namespace:MediatorClient.MVVM.View.Main.Content.Settings"
              xmlns:main_settingsViewModel="clr-namespace:MediatorClient.MVVM.ViewModel.Main.Content.Settings"
-             
              xmlns:main_laboratoryView="clr-namespace:MediatorClient.MVVM.View.Main.Content.Laboratory"
              xmlns:main_laboratoryViewModel="clr-namespace:MediatorClient.MVVM.ViewModel.Main.Content.Laboratory"
              
@@ -32,8 +31,11 @@
             <DataTemplate DataType="{x:Type preloadViewModel:PreloadViewModel}">
                 <preloadView:PreloadView/>
             </DataTemplate>
+            <DataTemplate DataType="{x:Type updateViewModel:UpdateViewModel}">
+                <updateView:UpdateView/>
+            </DataTemplate>
 
-
+    
             <DataTemplate DataType="{x:Type main_homeViewModel:HomeViewModel}">
                 <main_homeView:HomeView/>
             </DataTemplate>
@@ -43,7 +45,6 @@
             <DataTemplate DataType="{x:Type main_laboratoryViewModel:LaboratoryViewModel}">
                 <main_laboratoryView:LaboratoryView/>
             </DataTemplate>
-            
 
         </ResourceDictionary>
     </Application.Resources>

@@ -20,9 +20,11 @@ namespace MediatorClient
     /// </summary>
     public partial class MainWindow : Window
     {
+        public event Action DrugMoved;
         public MainWindow()
         {
             InitializeComponent();
+            DrugMoved += OnMainWindowDrugMoved;
         }
 
         private void OnCloseClick(object sender, MouseButtonEventArgs e)
@@ -35,7 +37,8 @@ namespace MediatorClient
             if (WindowState == WindowState.Normal)
             {
                 ExpandImage.Source = new BitmapImage(new Uri("./UI/Images/Icons/ExpandCollapse/eva_collapse-fill.png", UriKind.Relative));
-                WindowState = WindowState.Maximized;
+
+                Application.Current.MainWindow.WindowState = WindowState.Maximized;
             }
             else
             {
@@ -52,7 +55,18 @@ namespace MediatorClient
         private void OnTopPanelMouseDown(object sender, MouseButtonEventArgs e)
         {
             if (e.LeftButton == MouseButtonState.Pressed)
+            {
                 DragMove();
+                DrugMoved?.Invoke();
+            }
+        }
+
+        private void OnMainWindowDrugMoved()
+        {
+            //if (WindowState == WindowState.Maximized)
+            //{
+            //    WindowState = WindowState.Normal;
+            //}
         }
     }
 }
