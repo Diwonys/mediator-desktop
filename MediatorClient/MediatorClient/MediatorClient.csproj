@@ -16,7 +16,6 @@
     <None Remove="UI\Images\Icons\Roll\akar-icons_plus.png" />
     <None Remove="UI\Images\Icons\Roll\akar-icons_roll.png" />
     <None Remove="UI\Images\Loader\Discord.png" />
-    <None Remove="UI\Images\Loader\Loader.png" />
   </ItemGroup>
 
   <ItemGroup>
@@ -38,7 +37,6 @@
     <Resource Include="UI\Images\Icons\Roll\akar-icons_plus.png" />
     <Resource Include="UI\Images\Icons\Roll\akar-icons_roll.png" />
     <Resource Include="UI\Images\Loader\Discord.png" />
-    <Resource Include="UI\Images\Loader\Loader.png" />
   </ItemGroup>
 
 </Project>

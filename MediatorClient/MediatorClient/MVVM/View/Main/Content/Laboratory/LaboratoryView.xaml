@@ -7,6 +7,23 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
-        <Button Content="CLICK LAB BUTTON" Background="White"/>
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <StackPanel>
+            <Button Content="Popup" Width="80" Click="Button_Click" HorizontalAlignment="Left" />
+            <Popup x:Name="popup1" StaysOpen="False" Placement="Mouse" MaxWidth="180"
+                    AllowsTransparency="True" >
+                <StackPanel>
+                    <Button Content="Click"/>
+                    <TextBlock TextWrapping="Wrap" Width="180" Background="LightPink" Opacity="0.8" >
+            Чтобы узнать больше, посетите сайт metanit.com
+                    </TextBlock>
+                </StackPanel>
+            </Popup>
+        </StackPanel>
+        <Button Click="OnASIOStarted" Grid.Row="1" Content="Run ASIO 4 all" Width="150" Height="50"/>
     </Grid>
 </UserControl>

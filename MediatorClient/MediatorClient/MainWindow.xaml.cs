@@ -21,9 +21,17 @@ namespace MediatorClient
     public partial class MainWindow : Window
     {
         public event Action DrugMoved;
+        private readonly ResourceDictionary _iconsResourceDictionary;
         public MainWindow()
         {
             InitializeComponent();
+            _iconsResourceDictionary = new ResourceDictionary();
+            _iconsResourceDictionary.Source =
+                new Uri("./UI/Styles/Icons/ControlIcons.xaml", UriKind.Relative);
+
+            MaxHeight = SystemParameters.MaximizedPrimaryScreenHeight;
+            MaxWidth = SystemParameters.MaximizedPrimaryScreenWidth;
+
             DrugMoved += OnMainWindowDrugMoved;
         }
 
@@ -36,13 +44,12 @@ namespace MediatorClient
         {
             if (WindowState == WindowState.Normal)
             {
-                ExpandImage.Source = new BitmapImage(new Uri("./UI/Images/Icons/ExpandCollapse/eva_collapse-fill.png", UriKind.Relative));
-
-                Application.Current.MainWindow.WindowState = WindowState.Maximized;
+                ExpandImage.Style = (Style)_iconsResourceDictionary["CollapseControlIcon"];
+                WindowState = WindowState.Maximized;
             }
             else
             {
-                ExpandImage.Source = new BitmapImage(new Uri("./UI/Images/Icons/ExpandCollapse/uil_expand-alt.png", UriKind.Relative));
+                ExpandImage.Style = (Style)_iconsResourceDictionary["ExpandControlIcon"];
                 WindowState = WindowState.Normal;
             }
         }
@@ -57,7 +64,7 @@ namespace MediatorClient
             if (e.LeftButton == MouseButtonState.Pressed)
             {
                 DragMove();
-                DrugMoved?.Invoke();
+                //DrugMoved?.Invoke();
             }
         }
 

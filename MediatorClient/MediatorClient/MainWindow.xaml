@@ -20,7 +20,8 @@
         >
     <WindowChrome.WindowChrome>
         <WindowChrome CaptionHeight="0"
-                      ResizeBorderThickness="5" />
+                      ResizeBorderThickness="5" 
+                      />
     </WindowChrome.WindowChrome>
     <Window.DataContext>
         <preloadViewModel:TemplateViewModel/>
@@ -30,6 +31,7 @@
             <Border DockPanel.Dock="Top" 
                 Margin="0,1,0,0"
                 Height="25"
+                Padding="15,2,5,0"
                 Background="Black"
                 Panel.ZIndex="3"
                 MouseDown="OnTopPanelMouseDown">

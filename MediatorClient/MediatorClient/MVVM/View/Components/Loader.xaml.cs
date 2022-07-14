@@ -23,21 +23,6 @@ namespace MediatorClient.MVVM.View.Components
         public Loader()
         {
             InitializeComponent();
-            Loaded += OnLoaded;
-        }
-
-        private void OnLoaded(object sender, RoutedEventArgs e)
-        {
-            //Task.Run(() =>
-            //{
-            //    while (true)
-            //    {
-            //        Dispatcher.Invoke(() =>
-            //        {
-            //            LoaderImage.RenderTransform = new RotateTransform(45);
-            //        });
-            //    }
-            //}).ConfigureAwait(false);
         }
     }
 }

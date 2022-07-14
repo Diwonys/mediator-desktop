@@ -7,11 +7,14 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
-        <Image x:Name="LoaderImage" Source="../../../UI/Images/Loader/Discord.png"                
+        <Image x:Name="LoaderImage" Source="../../../UI/Images/Loader/loading-icon-png-24.jpg"                
                RenderTransformOrigin="0.5,0.5"
                >
-            <Image.RenderTransform>
-                <RotateTransform ></RotateTransform>
+            <Image.RenderTransform >
+                <TransformGroup >
+                    <RotateTransform />
+                    <ScaleTransform />
+                </TransformGroup>
             </Image.RenderTransform>
             <Image.Style>
                 <Style>
@@ -20,12 +23,27 @@
                             <Trigger.EnterActions>
                                 <BeginStoryboard>
                                     <Storyboard>
-                                        <DoubleAnimation
-                                    Storyboard.TargetProperty="RenderTransform.Angle"
-                                    From="0"
-                                    To="360"
-                                    Duration="0:0:5"
-                                    RepeatBehavior="Forever" />
+                                        <DoubleAnimation 
+                                            Storyboard.TargetProperty="(RenderTransform).Children[0].Angle"
+                                                         From="0" 
+                                                         To="360" 
+                                                         Duration="0:0:3"
+                                                         RepeatBehavior="Forever" />
+                                        <DoubleAnimation 
+                                            Storyboard.TargetProperty="(RenderTransform).Children[1].ScaleY"
+                                                         From="1" 
+                                                         To="1.5" 
+                                                         Duration="0:0:3"
+                                                         RepeatBehavior="Forever" 
+                                                         AutoReverse="True"/>
+                                        <DoubleAnimation 
+                                            Storyboard.TargetProperty="(RenderTransform).Children[1].ScaleX"
+                                                         From="1" 
+                                                         To="1.5" 
+                                                         Duration="0:0:3"
+                                                         RepeatBehavior="Forever" 
+                                                         AutoReverse="True"
+/>
                                     </Storyboard>
                                 </BeginStoryboard>
                             </Trigger.EnterActions>

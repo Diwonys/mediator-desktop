@@ -60,6 +60,19 @@ namespace MediatorClient.Services
             _localData.Add(key, JObject.FromObject(value));
             await ImmutableSaveAsync();
         }
+        public static async Task AddOrReplaceAsync<T>(object value)
+        {
+            var key = typeof(T).FullName;
+
+            if (value == null)
+                throw new NullReferenceException();
+
+            if (_localData.ContainsKey(key))
+                _localData.Remove(key);
+
+            _localData.Add(key, JObject.FromObject(value));
+            await ImmutableSaveAsync();
+        }
 
         public static async Task RemoveAsync(string key)
         {
@@ -69,10 +82,23 @@ namespace MediatorClient.Services
             await ImmutableSaveAsync();
         }
 
-        public static T Get<T>(string key)
+        public static async Task RemoveAsync<T>()
         {
+            var key = typeof(T).FullName;
+
+            if (!_localData.ContainsKey(key))
+                return;
+            _localData.Remove(key);
+            await ImmutableSaveAsync();
+        }
+
+        public static T Get<T>()
+        {
+            var key = typeof(T).FullName;
+            
             if (!_localData.ContainsKey(key))
                 return (T)Activator.CreateInstance(typeof(T));
+
             return _localData[key].ToObject<T>();
         }
     }

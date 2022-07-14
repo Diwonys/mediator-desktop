@@ -5,6 +5,8 @@ using Notification.Wpf;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
+using System.Net.Sockets;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -24,36 +26,56 @@ namespace MediatorClient.MVVM.View.Main.Content.Settings
     /// </summary>
     public partial class SettingsView : UserControl
     {
-        private readonly AsioSettings _settings;
-        private readonly string _settingsKey = "AsioSettings";
+        private readonly NotificationManager _notificationManager = new NotificationManager();
+        private AsioSettings _asioSettings;
+        private NetworkSettings _networkSettings;
         public SettingsView()
         {
             InitializeComponent();
+            InitAsioSettings();
+            InitNetworkSettings();
 
+            _asioSettings = LocalStorageService.Get<AsioSettings>();
+            _networkSettings = LocalStorageService.Get<NetworkSettings>();
+            AsioDrivers.Text = _asioSettings.DriverName;
+            IPConnection.Text = _networkSettings.IPConnection;
+        }
+
+        private void InitNetworkSettings()
+        {
+            var host = Dns.GetHostEntry(Dns.GetHostName());
+            var addresses = host.AddressList
+               .Where(i => i.AddressFamily == AddressFamily.InterNetwork);
+
+            foreach (var address in addresses)
+            {
+                IPConnection.Items.Add(address.ToString());
+            }
+        }
+
+        private void InitAsioSettings()
+        {
             foreach (var driverName in AsioOut.GetDriverNames())
             {
                 AsioDrivers.Items.Add(driverName);
             }
-            AsioDrivers.Items.Add("1");
-            AsioDrivers.Items.Add("2");
-            AsioDrivers.Items.Add("3");
-
-            _settings = LocalStorageService.Get<AsioSettings>(_settingsKey);
-            AsioDrivers.Text = _settings.DriverName;
         }
 
         private async void OnSaveClick(object sender, RoutedEventArgs e)
         {
-            var settings = LocalStorageService.Get<AsioSettings>(_settingsKey);
-            settings.DriverName = AsioDrivers.SelectedItem.ToString();
-            await LocalStorageService.AddOrReplaceAsync(_settingsKey, settings);
+            _asioSettings = LocalStorageService.Get<AsioSettings>();
+            _asioSettings.DriverName = AsioDrivers.SelectedItem.ToString();
+            await LocalStorageService.AddOrReplaceAsync<AsioSettings>(_asioSettings);
 
-            var notificationManager = new NotificationManager();
+            _networkSettings = LocalStorageService.Get<NetworkSettings>();
+            _networkSettings.IPConnection = IPConnection.SelectedItem.ToString();
+            await LocalStorageService.AddOrReplaceAsync<NetworkSettings>(_networkSettings);
 
-            notificationManager.Show(new NotificationContent
+
+            _notificationManager.Show(new NotificationContent
             {
-                Title = "Sample notification",
-                Message = "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+                Title = string.Empty,
+                Message = "Settings updated",
                 Type = NotificationType.Information
             }, areaName: "WindowArea");
 

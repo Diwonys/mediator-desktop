@@ -21,7 +21,7 @@ namespace MediatorClient.MVVM.ViewModel
             PreloadTemplate = new PreloadViewModel();
             UpdateTemplate = new UpdateViewModel();
 
-            CurrentView = PreloadTemplate;
+            CurrentView = MainTemplate;
             
             MainTemplateCommand = new RelayCommand(o =>
             {

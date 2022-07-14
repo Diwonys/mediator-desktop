@@ -35,9 +35,21 @@
                             Style="{StaticResource MenuButton}"
                             Command="{Binding LaboratoryCommand}"/>
             </StackPanel>
-            <TextBlock Text="Text" 
+            <StackPanel Orientation="Horizontal"
+                Grid.Row="1">
+                <TextBlock 
                        Background="White"
-                       Grid.Row="1"/>
+                        Width="40"
+                       ><Run Text="this is"/><LineBreak/><Run Text="image"/>
+                </TextBlock>
+                <TextBlock 
+                       Background="White"
+                        Width="40"
+                       ><Run Text="USERNAME"/><LineBreak/><Run Text="userID"/>
+                </TextBlock>
+                <Button Width="50" Content="Run settings"/>
+            </StackPanel>
+            
         </Grid>
 
         <ContentControl Grid.Column="1"

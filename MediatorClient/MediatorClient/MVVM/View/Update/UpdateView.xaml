@@ -9,12 +9,13 @@
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="150"/>
+            <RowDefinition Height="70"/>
             <RowDefinition Height="150"/>
             <RowDefinition />
         </Grid.RowDefinitions>
 
         <components:Loader Grid.Row="1"/>
+        <!--<components:Loader Grid.Row="0"/>-->
 
         <TextBlock Grid.Row="2" Text="SomeText2"/>
     </Grid>

@@ -9,7 +9,8 @@
     <StackPanel>
         <ComboBox x:Name="AsioDrivers">
         </ComboBox>
-
+        <ComboBox x:Name="IPConnection">
+        </ComboBox>
         <Button Content="Save" Click="OnSaveClick">
         </Button>
     </StackPanel>

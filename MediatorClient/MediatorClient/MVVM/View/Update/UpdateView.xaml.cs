@@ -1,4 +1,4 @@
-﻿using MediatorClient.Core.Halpers;
+﻿using MediatorClient.Core.Helpers;
 using MediatorClient.MVVM.ViewModel;
 using System;
 using System.Collections.Generic;
