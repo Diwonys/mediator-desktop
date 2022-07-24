@@ -24,7 +24,7 @@
             <StackPanel>
                 <RadioButton Content="Home"
                             Style="{StaticResource MenuButton}"
-                            IsChecked="True"
+                            
                             Command="{Binding HomeCommand}"/>
 
                 <RadioButton Content="Settings"
@@ -33,9 +33,11 @@
 
                 <RadioButton Content="Laboratory"
                             Style="{StaticResource MenuButton}"
+                            IsChecked="True"
                             Command="{Binding LaboratoryCommand}"/>
             </StackPanel>
             <StackPanel Orientation="Horizontal"
+                        Background="Beige"
                 Grid.Row="1">
                 <TextBlock 
                        Background="White"
@@ -47,7 +49,7 @@
                         Width="40"
                        ><Run Text="USERNAME"/><LineBreak/><Run Text="userID"/>
                 </TextBlock>
-                <Button Width="50" Content="Run settings"/>
+                <Button Width="50" Content="settings"/>
             </StackPanel>
             
         </Grid>

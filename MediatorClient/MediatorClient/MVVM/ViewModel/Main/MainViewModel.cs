@@ -27,7 +27,7 @@ namespace MediatorClient.MVVM.ViewModel.Main
             Settings = new SettingsViewModel();
             Laboratory = new LaboratoryViewModel();
 
-            CurrentView = Home;
+            CurrentView = Laboratory;
 
             HomeCommand = new RelayCommand(o =>
             {

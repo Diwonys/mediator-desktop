@@ -24,6 +24,9 @@
                 </StackPanel>
             </Popup>
         </StackPanel>
-        <Button Click="OnASIOStarted" Grid.Row="1" Content="Run ASIO 4 all" Width="150" Height="50"/>
+        <StackPanel Grid.Row="1">
+            <Button Click="OnASIOStarted" Content="Run ASIO 4 all" Width="150" Height="50"/>
+            <Button Click="Play"  Content="Play" Width="150" Height="50"/>
+        </StackPanel>
     </Grid>
 </UserControl>

@@ -19,7 +19,12 @@ namespace MediatorClient.MVVM.View.Main.Content.Laboratory
 
         private void OnASIOStarted(object sender, System.Windows.RoutedEventArgs e)
         {
-            _asio = new AsioWrapper();
+            _asio = new AsioWrapper(Dispatcher);
+        }
+
+        private void Play(object sender, System.Windows.RoutedEventArgs e)
+        {
+            _asio.Play();
         }
     }
 }
