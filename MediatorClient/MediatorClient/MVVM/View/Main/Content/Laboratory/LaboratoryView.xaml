@@ -5,6 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:MediatorClient.MVVM.View.Main.Content.Laboratory"
              mc:Ignorable="d" 
+             xmlns:components="clr-namespace:MediatorClient.MVVM.View.Components"
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
         <Grid.RowDefinitions>
@@ -24,9 +25,21 @@
                 </StackPanel>
             </Popup>
         </StackPanel>
-        <StackPanel Grid.Row="1">
+        <StackPanel FlowDirection="LeftToRight" Orientation="Horizontal">
             <Button Click="OnASIOStarted" Content="Run ASIO 4 all" Width="150" Height="50"/>
             <Button Click="Play"  Content="Play" Width="150" Height="50"/>
+            <TextBlock Text="This is Text" 
+                       x:Name="FrequencyOutput"
+                       TextAlignment="Center"
+                       Width="155"
+                       Height="45"
+                       Background="White"
+                       />
+        <Label x:Name="OutputLable" Content="Hello" Background="White" VerticalAlignment="Center"/>
         </StackPanel>
+        
+        <components:Tuner x:Name="TunerComponent" Grid.Row="1"/>
+        <components:FrequencyVisualizer x:Name="FrequencyVisualizerComponent"
+            Grid.Row="2"/>
     </Grid>
 </UserControl>

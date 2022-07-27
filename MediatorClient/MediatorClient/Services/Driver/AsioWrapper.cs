@@ -1,10 +1,15 @@
 ﻿using MediatorClient.MVVM.Model;
+using MediatorClient.MVVM.View.Components;
+using MediatorClient.Services.Driver.Utils;
 using NAudio.Wave;
+using ScottPlot;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Controls;
 using System.Windows.Threading;
 
 namespace MediatorClient.Services.Driver
@@ -17,6 +22,9 @@ namespace MediatorClient.Services.Driver
         private PlaybackState _playbackState;
         public int SampleRate { get; set; } = 44_100;
         private Dispatcher _dispatcher;
+
+        public double[] InterleavedSamples;
+        
         
         public AsioWrapper(Dispatcher dispatcher)
         {
@@ -24,7 +32,7 @@ namespace MediatorClient.Services.Driver
             _asioSettings = LocalStorageService.Get<AsioSettings>();
             _asioOut = InitializeInstance();
             DefaultConfiguration();
-            
+
         }
 
         private AsioOut InitializeInstance()
@@ -34,13 +42,13 @@ namespace MediatorClient.Services.Driver
             //    throw new InvalidOperationException("ASIO4ALL not found");
             //if (!AsioOut.isSupported())
             //    throw new InvalidOperationException("ASIO4ALL not supported");
-            
+
             return new AsioOut(_asioSettings.DriverName);
         }
         private void DefaultConfiguration()
         {
             var channelCount = _asioOut.DriverInputChannelCount;
-            var waveFormat = new WaveFormat(SampleRate, 2);
+            var waveFormat = new WaveFormat(SampleRate, 16, 2);
             _bufferedWaveProvider = new BufferedWaveProvider(waveFormat)
             {
                 ReadFully = true,
@@ -60,16 +68,53 @@ namespace MediatorClient.Services.Driver
             //Starttest();
         }
 
-        private void OnAsioOutAudioAvailable(object? sender, AsioAudioAvailableEventArgs e)
+        public void AddTuner()
+        {
+            InterleavedSamples = new double[4_096];
+            _asioOut.AudioAvailable += OnAsioOutAudioAvailableInfo;
+        }
+        public void RemoveTuner()
+        {
+            Array.Clear(InterleavedSamples);
+            _asioOut.AudioAvailable -= OnAsioOutAudioAvailableInfo;
+        }
+
+        private void OnAsioOutAudioAvailableInfo(object? sender, AsioAudioAvailableEventArgs e)
         {
             int fullBufferSize = e.SamplesPerBuffer * 4;
+            int sampleBufferSize = e.SamplesPerBuffer;
+
             byte[] buffer = new byte[fullBufferSize];
             for (int i = 0; i < e.InputBuffers.Length; i++)
             {
-                //Marshal.Copy(e.InputBuffers[i], buffer, 0, fullBufferSize);
-                //Marshal.Copy(buffer, 0, e.OutputBuffers[i], fullBufferSize);                
-                CopyBytes(e.InputBuffers[i], e.OutputBuffers[i], 0, fullBufferSize);
+                CopyBytes(e.InputBuffers[i], buffer, 0, fullBufferSize);
             }
+
+            for (int i = 0; i < buffer.Length / 2; i++)
+                InterleavedSamples[i] = BitConverter.ToInt16(buffer, i * 2);
+
+            //for (int i = 0, j = 0; i < fullBufferSize; i += 4, j++)
+            //{
+            //    AudioValues[j] = Convert.ToSingle(buffer[i] + buffer[i + 1] + buffer[i + 2] + buffer[i + 3]);
+            //}
+
+            //float[] samples = e.GetAsInterleavedSamples();
+            //Array.Clear(InterleavedSamples);
+            //Array.Copy(samples, InterleavedSamples, samples.Length);
+
+        }
+
+        private void OnAsioOutAudioAvailable(object? sender, AsioAudioAvailableEventArgs e)
+        {
+            int fullBufferSize = e.SamplesPerBuffer * 4;
+            
+            for (int i = 0; i < e.InputBuffers.Length; i++)
+            {
+                CopyBytes(e.InputBuffers[i], e.OutputBuffers[i], 0, fullBufferSize);
+                //CopyBytes(e.InputBuffers[i], buffer, 0, fullBufferSize);               
+                //CopyBytes(buffer, e.OutputBuffers[i], 0, fullBufferSize);
+            }
+
             e.WrittenToOutputBuffers = true;
         }
 
@@ -112,9 +157,6 @@ namespace MediatorClient.Services.Driver
 
         private void OnAsioOutDriverResetRequest(object? sender, EventArgs e)
         {
-            //_asioSettings = LocalStorageService.Get<AsioSettings>();
-            //_asioOut = InitializeInstance();
-            //DefaultConfiguration();
             _dispatcher.BeginInvoke(() =>
             {
                 _asioOut.Dispose();
@@ -122,10 +164,10 @@ namespace MediatorClient.Services.Driver
                 _asioOut = InitializeInstance();
                 DefaultConfiguration();
 
-                if(_playbackState == PlaybackState.Playing)
+                if (_playbackState == PlaybackState.Playing)
                 {
                     _asioOut.Play();
-                }                
+                }
             });
         }
     }
