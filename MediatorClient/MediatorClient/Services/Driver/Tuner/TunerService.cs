@@ -88,7 +88,7 @@ namespace MediatorClient.Services.Driver.Utils
 
             double fftPeakMagnitude = fftMagnitude.Max();
 
-            if (fftPeakMagnitude > 63 && peakFrequency > 15 && peakFrequency < 500)
+            if (fftPeakMagnitude > 59 && peakFrequency > 15 && peakFrequency < 500)
             { 
                 _middleNote = GetNearest(peakFrequency);
                 _leftNote = GetPrevious(_middleNote.Frequency);

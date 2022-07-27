@@ -49,14 +49,12 @@ namespace MediatorClient.MVVM.View.Main.Content.Laboratory
         {
             TunerComponent.LeftNote.Text = args.LeftNote.Name + args.LeftNote.Frequency.ToString() ;
             TunerComponent.RightNote.Text = args.RightNote.Name + args.RightNote.Frequency.ToString();
-            TunerComponent.MiddleNote.Text = args.MiddleNote.Name + args.PeakFrequency.ToString() + "|"  + args.MiddleNote.Frequency.ToString();
+            TunerComponent.MiddleNote.Text = args.MiddleNote.Name + (Math.Round(args.PeakFrequency, 2)).ToString() + "|"  + args.MiddleNote.Frequency.ToString();
 
 
             double vecotrPart = Math.Abs(args.MiddleNote.Frequency - args.PeakFrequency);
             double min = args.MiddleNote.Frequency - vecotrPart - 10;
             double max = args.MiddleNote.Frequency + vecotrPart + 10;
-            if (Math.Abs(min + max) % 2 != 0)
-                max++;
             
             TunerComponent.PercentBar.Minimum = min;
             TunerComponent.PercentBar.Maximum = max;
@@ -66,8 +64,8 @@ namespace MediatorClient.MVVM.View.Main.Content.Laboratory
             double plotYMax = FrequencyVisualizerComponent.Chart.Plot.GetAxisLimits().YMax;
             FrequencyVisualizerComponent.Chart.Plot.SetAxisLimits(
             xMin: 0,
-            xMax: 1.5,
-            yMin: 60,
+            xMax: 6,
+            yMin: 0,
             yMax: Math.Max(args.FFtPeakMagnitude, plotYMax));
 
             FrequencyVisualizerComponent.Chart.RefreshRequest();

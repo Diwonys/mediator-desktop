@@ -48,7 +48,7 @@ namespace MediatorClient.Services.Driver
         private void DefaultConfiguration()
         {
             var channelCount = _asioOut.DriverInputChannelCount;
-            var waveFormat = new WaveFormat(SampleRate, 16, 2);
+            var waveFormat = new WaveFormat(SampleRate, 16, 1);
             _bufferedWaveProvider = new BufferedWaveProvider(waveFormat)
             {
                 ReadFully = true,
@@ -64,19 +64,6 @@ namespace MediatorClient.Services.Driver
             //multiplexer.ConnectInputToOutput(1, 1);
 
             _asioOut.InitRecordAndPlayback(_bufferedWaveProvider, 2, SampleRate);
-
-            //Starttest();
-        }
-
-        public void AddTuner()
-        {
-            InterleavedSamples = new double[4_096];
-            _asioOut.AudioAvailable += OnAsioOutAudioAvailableInfo;
-        }
-        public void RemoveTuner()
-        {
-            Array.Clear(InterleavedSamples);
-            _asioOut.AudioAvailable -= OnAsioOutAudioAvailableInfo;
         }
 
         private void OnAsioOutAudioAvailableInfo(object? sender, AsioAudioAvailableEventArgs e)
@@ -85,13 +72,17 @@ namespace MediatorClient.Services.Driver
             int sampleBufferSize = e.SamplesPerBuffer;
 
             byte[] buffer = new byte[fullBufferSize];
-            for (int i = 0; i < e.InputBuffers.Length; i++)
-            {
-                CopyBytes(e.InputBuffers[i], buffer, 0, fullBufferSize);
-            }
+            //for (int i = 0; i < e.InputBuffers.Length; i++)
+            //{
+                CopyBytes(e.InputBuffers[0], buffer, 0, fullBufferSize);
+            //}
 
             for (int i = 0; i < buffer.Length / 2; i++)
                 InterleavedSamples[i] = BitConverter.ToInt16(buffer, i * 2);
+
+            //InterleavedSamples = 
+            //for (int i = 0; i < buffer.Length / 2; i++)
+            //    InterleavedSamples[i] = BitConverter.ToInt16(buffer, i * 2);
 
             //for (int i = 0, j = 0; i < fullBufferSize; i += 4, j++)
             //{
@@ -108,12 +99,10 @@ namespace MediatorClient.Services.Driver
         {
             int fullBufferSize = e.SamplesPerBuffer * 4;
             
-            for (int i = 0; i < e.InputBuffers.Length; i++)
-            {
-                CopyBytes(e.InputBuffers[i], e.OutputBuffers[i], 0, fullBufferSize);
-                //CopyBytes(e.InputBuffers[i], buffer, 0, fullBufferSize);               
-                //CopyBytes(buffer, e.OutputBuffers[i], 0, fullBufferSize);
-            }
+            //for (int i = 0; i < e.InputBuffers.Length; i++)
+            //{
+                CopyBytes(e.InputBuffers[0], e.OutputBuffers[0], 0, fullBufferSize);                
+            //}
 
             e.WrittenToOutputBuffers = true;
         }
@@ -169,6 +158,17 @@ namespace MediatorClient.Services.Driver
                     _asioOut.Play();
                 }
             });
+        }
+
+        public void AddTuner()
+        {
+            InterleavedSamples = new double[8192];
+            _asioOut.AudioAvailable += OnAsioOutAudioAvailableInfo;
+        }
+        public void RemoveTuner()
+        {
+            Array.Clear(InterleavedSamples);
+            _asioOut.AudioAvailable -= OnAsioOutAudioAvailableInfo;
         }
     }
 }
